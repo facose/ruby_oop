@@ -3,6 +3,10 @@ require_relative 'carta'
 
 class Deck 
     def initialize
+        generate_deck               
+    end
+
+    def generate_deck
         figures = ['C', 'D', 'E', 'T']
         @cards = []
         
@@ -10,26 +14,30 @@ class Deck
             for i in (1..13) do
                 @cards.push("#{i} #{figure}")
             end
-        end         
+        end
+    end    
+    
+    def show
+        puts @cards
+    end        
+    
+    def shuffle!
+        @cards.shuffle!
     end
     
-    def shuffle
-        @cards = @cards.shuffle
+    def shift
+        @cards.shift
     end
     
-    def throw_first_car
-        first_card = shuffle.delete(@cards[0])
-        puts "La carta eliminada es: #{first_card}"
-        puts 'El resto de la baraja es: '
-        return @cards
-    end
-    
-    def distribute_hand
-        shuffle
-        puts @cards.sample(5)          
+    def handout(n = 5)
+        hand = []
+
+        n.times { hand << shift }
+        return hand
     end        
 end    
 
 deck = Deck.new
 
-puts deck.throw_first_car
+deck.shuffle!
+puts deck.handout
